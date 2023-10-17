@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "tomsk-special-economic-zone-bot"
 version = "0.1.0"
-description = "Чат-от для Особой экономической зоны технико-внедренческого типа \"Томск\""
+description = "Чат-бот Особой экономической зоны технико-внедренческого типа \"Томск\""
 authors = ["Victor <MarkerViktor@outlook.com>"]
 readme = "README.md"
 
