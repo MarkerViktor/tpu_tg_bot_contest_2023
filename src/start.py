@@ -5,14 +5,16 @@ import sys
 from aiogram import Dispatcher, Bot
 from dependency_injector.wiring import inject, Provide
 
+from src.lib.state_machine import StateMachine
 from src.container import Container
-from src.bot.handlers.common import router as common_router
 
 
 @inject
-async def start_bot(bot: Bot = Provide["bot.client"], dp: Dispatcher = Provide["bot.dispatcher"]) -> None:
-    dp.include_routers(common_router)
-    await dp.start_polling(bot)
+async def start_bot(bot: Bot = Provide["bot.client"], state_machine: StateMachine = Provide["state_machine"]) -> None:
+    dp = Dispatcher()
+    dp.message()(state_machine.handle_action)
+    dp.callback_query()(state_machine.handle_action)
+    await dp.start_polling(bot, allowed_updates=["message", "callback_query"])
 
 
 def start():

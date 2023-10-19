@@ -30,3 +30,16 @@ class Container(containers.DeclarativeContainer):
         BotContainer,
         config=config.provided.bot,
     )
+
+    states = providers.List(
+    )
+
+    state_machine = providers.Singleton(
+        StateMachine,
+        states=states,
+        default_state_code=default_state.code,
+        storage=providers.Singleton(
+            PGStateMachineStorage,
+            db=_db,
+        ),
+    )

@@ -12,14 +12,26 @@ class SQLiteConfig(BaseModel):
     path: Path
 
     @property
-    def get_url(self) -> str:
+    def url(self) -> str:
         return f"sqlite+aiosqlite:///{self.path}"
+
+
+class PostgreSQLConfig(BaseModel):
+    host: str
+    port: int
+    user: str
+    password: str
+    name: str
+
+    @property
+    def url(self) -> str:
+        return f"postgresql+asyncpg://{self.user}:{self.password}@{self.host}:{self.port}/{self.name}"
 
 
 class Config(BaseSettings):
     bot: TelegramBotConfig
 
-    db: SQLiteConfig
+    db: PostgreSQLConfig
 
     model_config = SettingsConfigDict(
         str_strip_whitespace=True,
